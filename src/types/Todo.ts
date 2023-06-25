@@ -8,3 +8,9 @@ export interface ITodoListProps {
   toogleCheckedState: (todoId: ITodo["id"]) => void;
   removeTodo: (todoId: ITodo["id"]) => void;
 }
+export interface INewTodoProps {
+  createTodo: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    textRef: string
+  ) => void;
+}

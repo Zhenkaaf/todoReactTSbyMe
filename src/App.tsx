@@ -6,23 +6,18 @@ import TodoList from "./components/TodoList/TodoList";
 
 function App() {
   const [todos, setTodos] = useState<ITodo[]>([]);
-  const [text, setText] = useState<ITodo["text"]>("");
 
   const crateTodo = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    textRef: string
   ) => {
     event.preventDefault();
     const newTodo = {
       id: new Date().toString(),
-      text: text,
+      text: textRef,
       isChecked: false,
     };
     setTodos([newTodo, ...todos]);
-    setText("");
-  };
-
-  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
   };
 
   const removeTodo = (todoId: ITodo["id"]) => {
@@ -47,11 +42,7 @@ function App() {
   return (
     <div className="App">
       <div>
-        <NewTodoForm
-          createTodo={crateTodo}
-          handleTextChange={handleTextChange}
-          text={text}
-        />
+        <NewTodoForm createTodo={crateTodo} />
       </div>
       <TodoList
         todos={todos}

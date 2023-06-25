@@ -1,19 +1,25 @@
-interface INewTodoProps {
-  text: string;
-  createTodo: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  handleTextChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { useRef } from "react";
+import { INewTodoProps } from "../../types";
 
-const NewTodoForm = ({ createTodo, handleTextChange, text }: INewTodoProps) => {
+const NewTodoForm = ({ createTodo }: INewTodoProps) => {
+  const textRef = useRef<HTMLInputElement>(null);
+
+  const handleCreateTodo = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    if (textRef.current) {
+      createTodo(event, textRef.current.value);
+      textRef.current.value = "";
+    }
+  };
   return (
     <form>
       <input
         type="text"
         placeholder="Type in text"
-        value={text}
-        onChange={(event) => handleTextChange(event)}
+        ref={textRef}
       />
-      <button onClick={(event) => createTodo(event)}>Create todo</button>
+      <button onClick={(event) => handleCreateTodo(event)}>Create todo</button>
     </form>
   );
 };
